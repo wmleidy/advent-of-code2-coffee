@@ -20,12 +20,12 @@ movementTracker = (commands)->
   repeatedPosition = undefined
   hasDuplicateLocation = (oldLocations, newLocation)->
     flag = false
-    oldLocations.forEach (oldLocation)->
+    for oldLocation in oldLocations
       if oldLocation[0] == newLocation[0] && oldLocation[1] == newLocation[1]
         flag = true
     flag
 
-  commands.split(", ").forEach (command)->
+  for command in commands.split(", ")
     rotation = if command[0] == 'R' then 1 else -1
     orientation += rotation
     orientation += 4 if orientation < 0
