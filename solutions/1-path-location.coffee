@@ -5,6 +5,16 @@ movementTracker = (commands)->
   xPosition = 0
   yPosition = 0
 
+  bearing = (orientation)->
+    if orientation % 4 == 0
+      'N'
+    else if orientation % 4 == 1
+      'E'
+    else if orientation % 4 == 2
+      'S'
+    else
+      'W'
+
   # For Part Two
   locations = [[0,0]]
   repeatedPosition = undefined
@@ -17,36 +27,30 @@ movementTracker = (commands)->
 
   commands.split(", ").forEach (command)->
     rotation = if command[0] == 'R' then 1 else -1
-    distance = parseInt(command[1..-1])
-
     orientation += rotation
     orientation += 4 if orientation < 0
+    currentBearing = bearing(orientation)
+    distance = parseInt(command[1..-1])
 
     # for Part Two
     unless repeatedPosition
       for i in [1..distance]
         intermediatePosition =
-          if orientation % 4 == 0
-            [xPosition + i, yPosition]
-          else if orientation % 4 == 1
-            [xPosition, yPosition + i]
-          else if orientation % 4 == 2
-            [xPosition - i, yPosition]
-          else
-            [xPosition, yPosition - i]
+          switch currentBearing
+            when 'N' then [xPosition + i, yPosition]
+            when 'E' then [xPosition, yPosition + i]
+            when 'S' then [xPosition - i, yPosition]
+            when 'W' then [xPosition, yPosition - i]
         if hasDuplicateLocation(locations, intermediatePosition) && !repeatedPosition
           repeatedPosition = intermediatePosition
         else
           locations.push(intermediatePosition)
 
-    if orientation % 4 == 0
-      xPosition += distance
-    else if orientation % 4 == 1
-      yPosition += distance
-    else if orientation % 4 == 2
-      xPosition -= distance
-    else
-      yPosition -= distance
+    switch currentBearing
+      when 'N' then xPosition += distance
+      when 'E' then yPosition += distance
+      when 'S' then xPosition -= distance
+      when 'W' then yPosition -= distance
 
   # Part One
   blocksFromStart = Math.abs(xPosition) + Math.abs(yPosition)
