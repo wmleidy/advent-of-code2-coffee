@@ -1,8 +1,5 @@
 file = "../input/input4.txt"
 fs = require('fs')
-readline = require('readline').createInterface
-  terminal: false
-  input: fs.createReadStream(file)
 
 frequencyFinder = (chars)->
   counts = []
@@ -41,7 +38,7 @@ decrypt = (phrase, num)->
 
 runDecryption = ()->
   sum = 0
-  readline.on 'line', (line)->
+  for line in fs.readFileSync(file, 'utf8').split("\n")
     matchData = line.match(/(.+)-(\d+)\[([a-z]{5})\]/)
     letters  = matchData[1].split("-").join("").split("")
     sectorID = Number(matchData[2])
@@ -50,6 +47,6 @@ runDecryption = ()->
       sum += sectorID
       phrase = matchData[1].split("-").join(" ")
       console.log("#{sectorID}: #{decrypt(phrase, sectorID)}") # For Part Two
-    console.log(sum) # For Part One
+  console.log("Sum is #{sum}") # For Part One
 
 runDecryption()

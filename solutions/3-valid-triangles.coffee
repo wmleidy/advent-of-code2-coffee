@@ -1,8 +1,5 @@
 file = "../input/input3.txt"
 fs = require('fs')
-readline = require('readline').createInterface
-  terminal: false
-  input: fs.createReadStream(file)
 
 checkTriangle = (a, b, c)->
   a + b > c && a + c > b && b + c > a
@@ -10,21 +7,21 @@ checkTriangle = (a, b, c)->
 # Part One
 countGoodTriangles = ()->
   count = 0
-  readline.on 'line', (line)->
+  for line in fs.readFileSync(file, 'utf8').split("\n")
     matchData = line.match(/\s+(\d+)\s+(\d+)\s+(\d+)/)
     a = Number(matchData[1])
     b = Number(matchData[2])
     c = Number(matchData[3])
     count++ if checkTriangle(a, b, c)
-    console.log(count)
+  count
 
-countGoodTriangles()
+console.log(countGoodTriangles())
 
 # Part Two
 countGoodTrianglesVertically = ()->
   count = 0
   arr   = []
-  readline.on 'line', (line)->
+  for line in fs.readFileSync(file, 'utf8').split("\n")
     matchData = line.match(/\s+(\d+)\s+(\d+)\s+(\d+)/)
     arr.push(Number(matchData[1]))
     arr.push(Number(matchData[2]))
@@ -34,6 +31,6 @@ countGoodTrianglesVertically = ()->
       count++ if checkTriangle(arr[1], arr[4], arr[7])
       count++ if checkTriangle(arr[2], arr[5], arr[8])
       arr = []
-    console.log(count)
+  count
 
-countGoodTrianglesVertically()
+console.log(countGoodTrianglesVertically())
