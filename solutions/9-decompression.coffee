@@ -20,7 +20,8 @@ String.prototype.replaceAt = (index, char)->
 # The trick is to find out how many times each "real" character should be counted toward total.
 # This number is the product of all multiplier values in the marker that affect the character.
 #
-# My solution goes through the string, finds markers, and "processes" them one by one.
+# My solution goes through the string, finds markers, and "processes" them one by one, that is,
+# tracks their multipliers' cumulative effect on any "real" characters within their range.
 unzipTwo = (str)->
   # character multiplier array setup
   multiplierArray = []
