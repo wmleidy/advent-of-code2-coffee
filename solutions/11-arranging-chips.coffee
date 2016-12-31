@@ -7,7 +7,8 @@
 # Following a suggestion on the Advent of Code subreddit found here:
 # https://www.reddit.com/r/adventofcode/comments/5hp9mn/day_11_puzzle_is_dumb/db6bzag/,
 # I store game state as a string consisting of the floors of the elevator and each of
-# the chip/generator pairs.
+# the chip/generator pairs. The way that strings, arrays, and objects are implemented
+# in JavaScript also make using strings a good choice (easy to determine equality).
 
 # That is, "1|1&2|1&3" would represent the starting state of the given example, whereas
 # "1|1&1|2&1|2&1|3&3|3&3" represents my starting input.
@@ -16,11 +17,13 @@
 # it is not necessary to track which chip is which as long as they are kept in pairs,
 # which allows for implementing a uniform sorting algorithm to help weed out duplicate states.
 
+FLOORS = '4'
+
 String.prototype.replaceAt = (index, char)->
   this.substr(0, index) + char + this.substr(index + char.length)
 
 class GameState
-  constructor: (@state, @floors = "4")->
+  constructor: (@state, @steps)->
     @sortState()
 
   getSets: ()->
@@ -36,7 +39,7 @@ class GameState
 
   isWinningState: ()->
     for set in @getSets()
-      return false if set[0] != @floors or set[2] != @floors
+      return false if set[0] != FLOORS or set[2] != FLOORS
     true
 
   getUnpairedChips: ()->
@@ -45,16 +48,16 @@ class GameState
   getGeneratorLocations: ()->
     @generatorLocations ||= (set[2] for set in @getSets())
 
-  isValid: ()->
+  isInvalid: ()->
     for chipFloor in @getUnpairedChips()
-      return false if chipFloor in @getGeneratorLocations()
-    true
+      return true if chipFloor in @getGeneratorLocations()
+    false
 
   possibleMoves: ()->
     elevatorFloor = @state[0]
     elevatorMoves = if elevatorFloor is "1"
       ["2"]
-    else if elevatorFloor is @floors
+    else if elevatorFloor is FLOORS
       [(Number(elevatorFloor) - 1).toString()]
     else
       [(Number(elevatorFloor) - 1).toString(), (Number(elevatorFloor) + 1).toString()]
@@ -79,5 +82,24 @@ class GameState
 
     newStateStrings
 
-game = new GameState("1|2&1|3&3|1&1|2&2|3&3")
-console.log(game.possibleMoves())
+findShortestPath = (initialState)->
+  queue = [initialState]
+  knownStates = []
+
+  while queue.length > 0
+    examinedState = queue.shift()
+
+    continue if examinedState.isInvalid() or knownStates.indexOf(examinedState.state) > -1
+    return examinedState.steps if examinedState.isWinningState()
+
+    knownStates.push(examinedState.state)
+
+    for possibleMove in examinedState.possibleMoves()
+      gs = new GameState(possibleMove, examinedState.steps + 1)
+      queue.push(gs)
+
+gameOne = new GameState("1|1&1|2&1|2&1|3&3|3&3", 0)
+console.log(findShortestPath(gameOne))
+
+gameTwo = new GameState("1|1&1|1&1|1&1|2&1|2&1|3&3|3&3", 0)
+console.log(findShortestPath(gameTwo))
