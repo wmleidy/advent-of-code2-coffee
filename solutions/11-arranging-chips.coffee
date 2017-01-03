@@ -103,3 +103,9 @@ console.log(findShortestPath(gameOne))
 
 gameTwo = new GameState("1|1&1|1&1|1&1|2&1|2&1|3&3|3&3", 0)
 console.log(findShortestPath(gameTwo))
+
+# Lots of good wisdom here (alternative way to keep unique game states):
+#
+# On game tree search and "Zobrist hashing"
+# (https://www.reddit.com/r/adventofcode/comments/5hp9mn/day_11_puzzle_is_dumb/db2z7hz/)
+# (https://www.reddit.com/r/adventofcode/comments/5hp9mn/day_11_puzzle_is_dumb/db39xo0/)

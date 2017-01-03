@@ -1,2 +1,5 @@
-# advent-of-code2-coffee
-Solutions in CoffeeScript to Eric Wastl's Advent of Code 2016
+# Advent of Code, Year Two - CoffeeScript Solutions
+
+A new year of [Advent of Code](http://adventofcode.com/) means a lot of new, fun programming puzzles. Last year I solved them all in Ruby (see the solutions in [this repo](https://github.com/wmleidy/advent-of-code-ruby)); this time around I’m gunning for pure CoffeeScript solutions. I use a lot of Coffee-flavored JavaScript on top of Backbone.js and Underscore as a developer, but this project has allowed me to deepen my knowledge of idiomatic CoffeeScript (especially comprehensions, which I’d generally write using Underscore instead).
+
+On days when I’m particularly curious about other people’s approaches, I check the solution megathread in the [AoC subreddit](https://www.reddit.com/r/adventofcode/) after completing the problem and will occasionally include these findings at the bottom of my files. The one day I snuck a peek at chatter in the AoC subreddit (but not the solution thread itself) was Day 11, this partially due to the intimidatingly low number of successful solvers of this day’s problem relative to other days. The insights I gleaned are noted at the top of my Day 11 solution file.
