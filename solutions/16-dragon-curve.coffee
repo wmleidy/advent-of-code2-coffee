@@ -1,14 +1,17 @@
-DISK_LENGTH = 272
+# Note: 100% convinced that there are ways to do this bitwise that
+# are much more elegant and much more efficient...plus there's
+# assuredly a way to leverage the repeating input pattern...
+
+# DISK_LENGTH = 272
+DISK_LENGTH = 35651584
 input = "11101000110010100"
 
 expandData = (a)->
   return a if a.length >= DISK_LENGTH
-  b = ""
-  for i in [(a.length - 1)..0]
-    if a[i] == '0'
-      b += '1'
-    else
-      b += '0'
+  b = (
+    for bit in a.split("").reverse()
+      if bit == '1' then '0' else '1'
+  ).join("")
   a = a + '0' + b
   expandData(a)
 
