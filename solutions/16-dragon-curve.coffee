@@ -2,6 +2,12 @@
 # are much more elegant and much more efficient...plus there's
 # assuredly a way to leverage the repeating input pattern...
 
+# Update:
+# Turns out there is so much hidden (and interesting) complexity to this problem,
+# for example, see:
+# https://www.reddit.com/r/adventofcode/comments/5imh3d/2016_day_16_solutions/db9erfp/
+# https://www.reddit.com/r/adventofcode/comments/5ititq/2016_day_16_c_how_to_tame_your_dragon_in_under_a/
+
 # DISK_LENGTH = 272
 DISK_LENGTH = 35651584
 input = "11101000110010100"
