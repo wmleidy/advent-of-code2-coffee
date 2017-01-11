@@ -1,4 +1,4 @@
-# Advent of Code, Year Two - CoffeeScript Solutions
+# Advent of Code, Year Two - CoffeeScript Solutions (with Node.js)
 
 A new year of [Advent of Code](http://adventofcode.com/) means a lot of new, fun programming puzzles. Last year I solved them all in Ruby (see the solutions in [this repo](https://github.com/wmleidy/advent-of-code-ruby)); this time around I’m gunning for pure CoffeeScript solutions. I use a lot of Coffee-flavored JavaScript on top of Backbone.js and Underscore as a developer, but this project has allowed me to deepen my knowledge of idiomatic CoffeeScript (especially comprehensions, which I’d generally write using Underscore instead).
 
