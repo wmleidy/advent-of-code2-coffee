@@ -52,7 +52,7 @@ findLongestPath = (initialState)->
       for possibleState in examinedState.legalNextStates()
         queue.push(possibleState)
 
-  Math.max.apply(Math, winningPaths)
+  Math.max(winningPaths...)
 
 startingState = new GameState("", 0, 0)
 console.log(findShortestPath(startingState))
