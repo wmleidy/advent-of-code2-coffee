@@ -1,23 +1,24 @@
 input = 3005290
 
 # First solution to Part One (confusing and not very DRY)
-handoffPresents = (numberOfElves)->
-  elves = (true for i in [1..numberOfElves])
+handoffPresents = (totalElves)->
+  # since we don't care how many presents an elf has, just whether they
+  # have any, we can just use a boolean to represent this for simplicity
+  elves = (true for i in [1..totalElves])
   elfNumber = 0
   loop
-    if elves[elfNumber]
-      nextElf = elfNumber + 1
-      nextElf = 0 if nextElf is numberOfElves
-      until elves[nextElf]
-        nextElf++
-        nextElf = 0 if nextElf is numberOfElves
-      return elfNumber + 1 if elfNumber is nextElf
+    if elves[elfNumber] # i.e. the elf has a present
+      nextElf = safeIncrement(elfNumber, totalElves)
+      until elves[nextElf] # i.e. the next elf that has a present
+        nextElf = safeIncrement(nextElf, totalElves)
+      return elfNumber + 1 if elfNumber is nextElf # +1 because array is zero-indexed
       elves[nextElf] = false
-      elfNumber = nextElf + 1
-      elfNumber = 0 if elfNumber is numberOfElves
+      elfNumber = safeIncrement(nextElf, totalElves)
     else
-      elfNumber++
-      elfNumber = 0 if elfNumber is numberOfElves
+      elfNumber = safeIncrement(elfNumber, totalElves)
+
+safeIncrement = (index, length)->
+  if index == length then 0 else index + 1
 
 console.log(handoffPresents(input))
 
@@ -37,6 +38,9 @@ class ElvenCircle
       @pointer++
 
   banish: ()->
+    # originally wanted to remove the elf from array here, but it's
+    # super expensive to use splice in JavaScript on a 3 million
+    # element array, so ended up with a solution that resembles above
     @elves[@pointer].hasPresent = false
 
   nextElf: ()->
