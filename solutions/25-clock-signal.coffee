@@ -73,4 +73,6 @@ searchForMatch = ()->
     i++
   console.log("Match found with argument #{i}")
 
+# Note: not guaranteed to find an infinite match, but I made the assumption this
+# if the first one hundred repetittions are correct, then...
 searchForMatch()
